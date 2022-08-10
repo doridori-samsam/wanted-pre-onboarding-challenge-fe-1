@@ -1,5 +1,5 @@
-import { useState, use } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -12,11 +12,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import DomainVerificationIcon from "@mui/icons-material/DomainVerification";
-import { AuthContainer, Title, SubTitle, GoToSignUp } from "./Style";
+import { AuthContainer, SubTitle, GoToSignUp } from "./Style";
 
 function LogIn() {
-  const navigate = useNavigate();
-
   //MUI password input 스타일 함수
 
   const [values, setValues] = useState({
@@ -56,6 +54,7 @@ function LogIn() {
     emailGuide: "",
     passwordGuide: "",
   });
+
   //이메일 유효성 검사 정규표현식
   const checkEmail =
     /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,6}$/i;
@@ -77,7 +76,7 @@ function LogIn() {
     }
   }
   //로그인 클릭
-  async function SubmitLogIn(e) {
+  async function submitLogIn(e) {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:8080/users/login", {
@@ -102,7 +101,7 @@ function LogIn() {
         <DomainVerificationIcon color="primary" sx={{ fontSize: 50 }} />
         <SubTitle>나만의 투두리스트</SubTitle>
         <TextField
-          sx={{ m: 1, width: "28.5ch" }}
+          sx={{ m: 1, width: "28ch" }}
           id="standard-basic"
           label="이메일 아이디"
           variant="standard"
@@ -111,7 +110,7 @@ function LogIn() {
           error={isFailed.checkEmailError}
           helperText={isFailed.emailGuide}
         />
-        <FormControl sx={{ m: 1, width: "28.5ch" }} variant="standard">
+        <FormControl sx={{ m: 1, width: "28ch" }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">
             비밀번호
           </InputLabel>
@@ -142,11 +141,11 @@ function LogIn() {
           </FormHelperText>
         </FormControl>
         <Button
-          sx={{ m: 4, width: "31.6ch" }}
+          sx={{ m: 4, width: "34ch" }}
           variant="outlined"
           disabled={isActive}
           type="submit"
-          onClick={SubmitLogIn}
+          onClick={submitLogIn}
         >
           로그인
         </Button>

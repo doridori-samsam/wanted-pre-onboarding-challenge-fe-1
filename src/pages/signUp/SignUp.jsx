@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import NotFound from "../../../components/NotFound";
+import NotFound from "../../components/NotFound";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -109,7 +109,7 @@ function SignUp() {
               id="outlined-basic"
               label="이메일 주소"
               variant="outlined"
-              sx={{ m: 1, width: "29ch" }}
+              sx={{ m: 1, width: "28ch" }}
               onChange={handleEmail}
               onBlur={handleEmailFocus}
               error={isFailed.checkEmailError}
@@ -117,7 +117,7 @@ function SignUp() {
               required
             />
             <FormControl
-              sx={{ m: 1, width: "29ch" }}
+              sx={{ m: 1, width: "28ch" }}
               variant="outlined"
               required
               error={false}
@@ -154,7 +154,7 @@ function SignUp() {
               </FormHelperText>
             </FormControl>
             <Button
-              sx={{ m: 4, width: "31.6ch" }}
+              sx={{ m: 4, width: "34ch" }}
               variant="outlined"
               type="submit"
               onClick={submitSignUp}

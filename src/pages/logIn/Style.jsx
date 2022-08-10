@@ -21,7 +21,7 @@ const SubTitle = styled.h1`
 `;
 
 const GoToSignUp = styled.div`
-  width: 244px;
+  width: 260px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

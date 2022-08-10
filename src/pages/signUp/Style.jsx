@@ -6,7 +6,7 @@ const Welcome = styled.h1`
   font-size: 1.3rem;
 `;
 const GoToLogIn = styled.div`
-  width: 244px;
+  width: 260px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

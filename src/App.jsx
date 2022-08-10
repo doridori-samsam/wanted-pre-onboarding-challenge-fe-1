@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
-import LogIn from "./pages/home/logIn/LogIn";
-import SignUp from "./pages/home/signUp/SignUp";
+import LogIn from "./pages/logIn/LogIn";
+import SignUp from "./pages/signUp/SignUp";
 import Container from "@mui/material/Container";
 import "./App.css";
 
