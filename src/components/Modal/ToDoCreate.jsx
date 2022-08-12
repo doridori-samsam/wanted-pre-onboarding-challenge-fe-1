@@ -62,8 +62,6 @@ function ToDoCreate({ open, cancelClick, onClose }) {
     }
   }
 
-  console.log("안녕");
-
   return (
     <div>
       <Dialog open={open} onClose={onClose}>

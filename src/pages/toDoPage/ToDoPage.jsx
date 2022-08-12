@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToDoList from "./ToDoList";
 import ToDoCreate from "../../components/Modal/ToDoCreate";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { ToDoHeader, ToDoTitle, Day, MonthDate, BtnText } from "./Style";
+import axios from "axios";
 
 function ToDoPage() {
   //오늘 날짜 표시
@@ -64,6 +65,25 @@ function ToDoPage() {
     setOpen(false);
   }
 
+  //투두리스트 받아오기
+  const [listData, setListData] = useState([]);
+
+  useEffect(() => {
+    async function getToDoList() {
+      try {
+        const res = await axios.get("http://localhost:8080/todos/", {
+          headers: {
+            Authorization: localStorage.token,
+          },
+        });
+        setListData(res.data.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getToDoList();
+  }, [listData]);
+
   return (
     <>
       <ToDoHeader>
@@ -104,7 +124,7 @@ function ToDoPage() {
           {todayDate}일
         </MonthDate>
       </ToDoHeader>
-      <ToDoList />
+      <ToDoList mapdata={listData} />
       <ToDoCreate
         onClose={handleModalClose}
         open={open}

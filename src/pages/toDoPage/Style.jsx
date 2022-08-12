@@ -30,7 +30,6 @@ const BtnText = styled.span`
 `;
 
 const ListWrapper = styled.div`
-  // border: 1px solid blue;
   margin-top: 70px;
   margin-bottom: 40px;
 `;
