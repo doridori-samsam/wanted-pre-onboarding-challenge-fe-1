@@ -44,6 +44,7 @@ function ToDoList({ mapdata }) {
               <Typography
                 sx={{
                   flexGrow: 0.1,
+                  lineHeight: "30px",
                   color: "text.secondary",
                   fontFamily: "Pretendard-ExtraLight",
                   fontSize: "0.9rem",
