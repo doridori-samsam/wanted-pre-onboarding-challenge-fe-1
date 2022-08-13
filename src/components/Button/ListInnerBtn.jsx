@@ -1,23 +1,24 @@
-import { useState, forwardRef } from "react";
+import { useState } from "react";
 import axios from "axios";
+import ToDoEdit from "../Modal/ToDoEdit";
 import ToDoDelete from "../Modal/ToDoDelete";
 import { EditBtnWrapper, BtnBackGround } from "./Style";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-function ListInnerBtn({ contentId }) {
+function ListInnerBtn({ contentId, update }) {
   const token = localStorage.getItem("token");
 
   //휴지통 아이콘 클릭 시 알림창
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setOpen(false);
-  };
+  }
 
   //해당 리스트 삭제
   async function handleDelete() {
@@ -31,14 +32,25 @@ function ListInnerBtn({ contentId }) {
         }
       );
       setOpen(false);
+      update();
     } catch (err) {
       console.error(err);
     }
   }
+  //수정 아이콘 클릭 시 모달 창 open 상태
+  const [editOpen, setEditOpen] = useState(false);
+
+  function handleEditOpen() {
+    setEditOpen(true);
+  }
+
+  function handleEditClose() {
+    setEditOpen(false);
+  }
 
   return (
     <EditBtnWrapper>
-      <BtnBackGround>
+      <BtnBackGround onClick={handleEditOpen}>
         <BorderColorIcon
           sx={{
             color: "#CCCCCC;",
@@ -56,7 +68,18 @@ function ListInnerBtn({ contentId }) {
           }}
         />
       </BtnBackGround>
-      <ToDoDelete onClose={handleClose} onDelete={handleDelete} isOpen={open} />
+      <ToDoDelete
+        onClose={handleClose}
+        onDelete={handleDelete}
+        isOpen={open}
+        update={update}
+      />
+      <ToDoEdit
+        open={editOpen}
+        onClose={handleEditClose}
+        cancelClick={handleEditClose}
+        contentId={contentId}
+      />
     </EditBtnWrapper>
   );
 }

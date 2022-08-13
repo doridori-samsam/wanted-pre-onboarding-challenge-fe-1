@@ -7,7 +7,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-function ToDoList({ mapdata }) {
+function ToDoList({ mapdata, update }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -62,7 +62,7 @@ function ToDoList({ mapdata }) {
               >
                 {item.content}
               </Typography>
-              <ListInnerBtn contentId={item.id} />
+              <ListInnerBtn contentId={item.id} update={update} />
             </AccordionDetails>
           </Accordion>
         );

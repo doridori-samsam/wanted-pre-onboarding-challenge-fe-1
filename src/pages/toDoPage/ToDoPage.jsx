@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { todayMonth, todayWeek, todayDate } from "../../components/Today";
 import ToDoList from "./ToDoList";
+import useUpdate from "../../hooks/useUpdate";
 import ToDoCreate from "../../components/Modal/ToDoCreate";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
@@ -9,34 +11,7 @@ import { ToDoHeader, ToDoTitle, Day, MonthDate, BtnText } from "./Style";
 import axios from "axios";
 
 function ToDoPage() {
-  //오늘 날짜 표시
-  const today = new Date();
-  const monthNames = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
-  ];
-  const todayMonth = monthNames[today.getMonth()];
-  const todayDate = today.getDate();
-  const weekNames = [
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일",
-  ];
-  const todayWeek = weekNames[today.getDay()];
+  const { upDate, isUpDate } = useUpdate();
 
   //MUI 로그아웃 버튼 함수
   const [anchorEl, setAnchorEl] = useState(null);
@@ -82,7 +57,9 @@ function ToDoPage() {
       }
     }
     getToDoList();
-  }, [listData]);
+  }, [isUpDate]);
+
+  console.log(" to do page 렌더링");
 
   return (
     <>
@@ -124,11 +101,12 @@ function ToDoPage() {
           {todayDate}일
         </MonthDate>
       </ToDoHeader>
-      <ToDoList mapdata={listData} />
+      <ToDoList mapdata={listData} update={upDate} />
       <ToDoCreate
         onClose={handleModalClose}
         open={open}
         cancelClick={handleModalClose}
+        update={upDate}
       />
     </>
   );

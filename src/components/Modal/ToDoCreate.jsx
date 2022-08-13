@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Box from "@mui/material/Box";
 
-function ToDoCreate({ open, cancelClick, onClose }) {
+function ToDoCreate({ open, cancelClick, onClose, update }) {
   //투두리스트 내용 state
   const [newContent, setNewContent] = useState({
     title: "",
@@ -53,12 +53,12 @@ function ToDoCreate({ open, cancelClick, onClose }) {
             },
           }
         );
-        console.log(res);
       } catch (err) {
         console.error(err);
       }
       setNewContent({ title: "", content: "" });
       cancelClick();
+      update();
     }
   }
 
@@ -80,7 +80,7 @@ function ToDoCreate({ open, cancelClick, onClose }) {
               verticalAlign: "base-line",
             }}
           />
-          할 일 추가
+          할 일
         </DialogTitle>
         <DialogContent sx={{ padding: "15px" }}>
           <TextField
