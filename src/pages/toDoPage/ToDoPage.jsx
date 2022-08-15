@@ -59,8 +59,6 @@ function ToDoPage() {
     getToDoList();
   }, [isUpDate]);
 
-  console.log(" to do page 렌더링");
-
   return (
     <>
       <ToDoHeader>
@@ -102,12 +100,14 @@ function ToDoPage() {
         </MonthDate>
       </ToDoHeader>
       <ToDoList mapdata={listData} update={upDate} />
-      <ToDoCreate
-        onClose={handleModalClose}
-        open={open}
-        cancelClick={handleModalClose}
-        update={upDate}
-      />
+      {open === true ? (
+        <ToDoCreate
+          onClose={handleModalClose}
+          open={open}
+          cancelClick={handleModalClose}
+          update={upDate}
+        />
+      ) : null}
     </>
   );
 }

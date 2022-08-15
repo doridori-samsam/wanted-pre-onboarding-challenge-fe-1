@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,7 +12,27 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ToDoDelete({ isOpen, onClose, onDelete }) {
+function ToDoDelete({ isOpen, onClose, contentId, update }) {
+  const token = localStorage.getItem("token");
+  //해당 리스트 삭제
+  async function handleDelete() {
+    try {
+      const res = await axios.delete(
+        "http://localhost:8080/todos/" + contentId,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      onClose();
+      update();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  console.log("삭제모달");
   return (
     <Dialog
       open={isOpen}
@@ -42,7 +63,7 @@ function ToDoDelete({ isOpen, onClose, onDelete }) {
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={onDelete}
+          onClick={handleDelete}
           sx={{ fontSize: "0.9rem", fontFamily: "Pretendard-Medium" }}
         >
           네

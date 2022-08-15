@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Box from "@mui/material/Box";
 
-function ToDoEdit({ open, onClose, cancelClick, contentId }) {
+function ToDoEdit({ open, onClose, cancelClick, contentId, update }) {
   const token = localStorage.getItem("token");
 
   //투두리스트 데이터
@@ -31,7 +31,6 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
               },
             }
           );
-          console.log(res.data.data);
           setTodoData({
             title: res.data.data.title,
             content: res.data.data.content,
@@ -42,11 +41,13 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
       }
       getToDo();
     }
-  }, [open]);
+  }, []);
+
+  console.log("수정페이지");
 
   //제목, 내용 수정 handle 함수
   function handleEditTitle(e) {
-    setTodoData({ title: e.target.value });
+    setTodoData({ ...todoData, title: e.target.value });
   }
 
   function handleEditContent(e) {
@@ -60,26 +61,33 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
   });
 
   //해당 리스트 수정
-  async function handleEdit() {
-    try {
-      const res = await axios.put(
-        "http://localhost:8080/todos/" + contentId,
-        {
-          title: todoData.title,
-          content: todoData.content,
-        },
-        {
-          headers: {
-            Authorization: token,
+  async function submitEdit(e) {
+    e.preventDefault();
+    if (todoData.title.length <= 0) {
+      setIsFailed({ checkTitle: true });
+    } else if (todoData.content.length <= 0) {
+      setIsFailed({ checkContent: true });
+    } else {
+      try {
+        const res = await axios.put(
+          "http://localhost:8080/todos/" + contentId,
+          {
+            title: todoData.title,
+            content: todoData.content,
           },
-        }
-      );
-    } catch (err) {
-      console.error(err);
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        onClose();
+        update();
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
-
-  console.log(todoData);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -109,9 +117,9 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
           type="text"
           variant="standard"
           defaultValue={todoData.title}
+          key={todoData.title}
           onBlur={handleEditTitle}
-          // error={isFailed.checkTitle}
-
+          error={isFailed.checkTitle}
           sx={{ marginBottom: "20px", fontFamily: "Pretendard-Medium;" }}
         />
         <Box
@@ -128,7 +136,7 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
               label="내용"
               multiline
               defaultValue={todoData.content}
-              // error={isFailed.checkContent}
+              error={isFailed.checkContent}
               onBlur={handleEditContent}
               rows={10}
               sx={{ fontFamily: "Pretendard-ExtraLight" }}
@@ -137,7 +145,7 @@ function ToDoEdit({ open, onClose, cancelClick, contentId }) {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button type="submit" onClick={handleEdit}>
+        <Button type="submit" onClick={submitEdit}>
           확인
         </Button>
         <Button onClick={cancelClick}>취소</Button>

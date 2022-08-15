@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import ToDoEdit from "../Modal/ToDoEdit";
 import ToDoDelete from "../Modal/ToDoDelete";
 import { EditBtnWrapper, BtnBackGround } from "./Style";
@@ -20,24 +19,7 @@ function ListInnerBtn({ contentId, update }) {
     setOpen(false);
   }
 
-  //해당 리스트 삭제
-  async function handleDelete() {
-    try {
-      const res = await axios.delete(
-        "http://localhost:8080/todos/" + contentId,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      setOpen(false);
-      update();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  //수정 아이콘 클릭 시 모달 창 open 상태
+  //수정 아이콘 클릭 시 모달 창 open
   const [editOpen, setEditOpen] = useState(false);
 
   function handleEditOpen() {
@@ -68,18 +50,23 @@ function ListInnerBtn({ contentId, update }) {
           }}
         />
       </BtnBackGround>
-      <ToDoDelete
-        onClose={handleClose}
-        onDelete={handleDelete}
-        isOpen={open}
-        update={update}
-      />
-      <ToDoEdit
-        open={editOpen}
-        onClose={handleEditClose}
-        cancelClick={handleEditClose}
-        contentId={contentId}
-      />
+      {open === true ? (
+        <ToDoDelete
+          onClose={handleClose}
+          contentId={contentId}
+          isOpen={open}
+          update={update}
+        />
+      ) : null}
+      {editOpen === true ? (
+        <ToDoEdit
+          open={editOpen}
+          onClose={handleEditClose}
+          cancelClick={handleEditClose}
+          contentId={contentId}
+          update={update}
+        />
+      ) : null}
     </EditBtnWrapper>
   );
 }

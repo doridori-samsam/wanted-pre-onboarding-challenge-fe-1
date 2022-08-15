@@ -62,6 +62,8 @@ function ToDoCreate({ open, cancelClick, onClose, update }) {
     }
   }
 
+  console.log("작성 페이지");
+
   return (
     <div>
       <Dialog open={open} onClose={onClose}>
