@@ -83,7 +83,6 @@ function LogIn() {
         email: emailID,
         password: values["password"],
       });
-      console.log(res.data);
       localStorage.setItem("token", res.data.token);
       window.location.reload();
     } catch (err) {

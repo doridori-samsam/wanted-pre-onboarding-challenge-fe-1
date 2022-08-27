@@ -88,7 +88,6 @@ function SignUp() {
           email: emailID,
           password: values["password"],
         });
-        console.log(res.data);
         navigate("/");
       } catch (err) {
         console.error(err);

@@ -32,7 +32,6 @@ function ToDoDelete({ isOpen, onClose, contentId, update }) {
     }
   }
 
-  console.log("삭제모달");
   return (
     <Dialog
       open={isOpen}

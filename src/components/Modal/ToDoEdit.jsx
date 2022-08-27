@@ -43,8 +43,6 @@ function ToDoEdit({ open, onClose, cancelClick, contentId, update }) {
     }
   }, []);
 
-  console.log("수정페이지");
-
   //제목, 내용 수정 handle 함수
   function handleEditTitle(e) {
     setTodoData({ ...todoData, title: e.target.value });
